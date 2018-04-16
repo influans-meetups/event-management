@@ -1,29 +1,28 @@
-<mat-card class="app-card">
+<mat-card class="app-card" *ngIf="event">
   <mat-card-header>
-    <mat-card-title>Event detail</mat-card-title>
+    <mat-card-title>Event details</mat-card-title>
   </mat-card-header>
   <mat-card-content>
 
-    <mat-list *ngIf="event">
-      <mat-list-item>{{ event.title }}</mat-list-item>
+    <mat-list>
+      <mat-list-item>Title: {{ event.title }}</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>{{ event.description }}</mat-list-item>
+      <mat-list-item>Description: {{ event.description }}</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item>{{ event.start_date }} =>  {{ event.end_date }}</mat-list-item>
+      <mat-list-item>From {{ event.start_date | date }} To  {{ event.end_date | date }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>Location: {{ event.location }}</mat-list-item>
     </mat-list>
-
 
     <div>
       <button mat-button type="button" color="accent" (click)="edit(event.id)">
-        <mat-icon aria-label="Example icon-button with a heart icon">edit</mat-icon> Edit
+        <mat-icon aria-label="edit icon">edit</mat-icon> Edit
       </button>
 
       <button mat-button type="button" color="warn" (click)="remove(event.id)">
-        <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon> Remove
+        <mat-icon aria-label="remove icon">delete_forever</mat-icon> Remove
       </button>
     </div>
 
-
   </mat-card-content>
 </mat-card>
-

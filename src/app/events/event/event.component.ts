@@ -7,7 +7,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {MatSnackBar} from '@angular/material';
 
-
 @Component({
   selector: 'event',
   templateUrl: './event.component.html',
@@ -17,7 +16,7 @@ export class EventComponent implements OnInit, OnDestroy {
   @Input() eventModel: EventModel;
   eventForm: FormGroup;
   eventModelControl: any;
-  private subscription: Subscription;
+  private subscriptions: Array<Subscription> = [];
 
   constructor(private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,
@@ -26,10 +25,11 @@ export class EventComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
-    this.subscription = this.activatedRoute.params.subscribe(params => {
+    const subscription = this.activatedRoute.params.subscribe(params => {
       const id = +params['id'];
       this.findEvent(id);
     });
+    this.subscriptions.push(subscription);
   }
 
   save() {
@@ -39,15 +39,13 @@ export class EventComponent implements OnInit, OnDestroy {
       this.eventModel = Object.assign({}, this.eventForm.value);
     }
     this.eventService.save(this.eventModel).subscribe((response) => {
-      console.log(response);
       this.openSnackBar(`Event saved`, ``);
     });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-
 
   private createForm() {
     const initTitle = (this.eventModel && this.eventModel.title) ? this.eventModel.title  : '';
@@ -69,16 +67,22 @@ export class EventComponent implements OnInit, OnDestroy {
       Validators.required
     ]);
 
-    this.eventModelControl = {title, description, start_date, end_date };
+    const initLocation = (this.eventModel && this.eventModel.location) ?  this.eventModel.location : '';
+    const location = new FormControl(initLocation, [
+      Validators.required
+    ]);
+
+    this.eventModelControl = { title, description, start_date, end_date, location };
     this.eventForm =  this.formBuilder.group(this.eventModelControl);
   }
 
   private findEvent(id: number) {
     if (Number.isInteger(id)) {
-      this.eventService.findOne(id).subscribe((response) => {
+      const subscription = this.eventService.findOne(id).subscribe((response) => {
         this.eventModel = response;
         this.createForm();
       });
+      this.subscriptions.push(subscription);
     }
   }
 

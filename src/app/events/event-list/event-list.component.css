@@ -1,12 +1,8 @@
-.example-container {
+.events-container {
   display: flex;
   flex-direction: column;
+  padding: 10px;
   min-width: 300px;
-}
-
-.example-header {
-  min-height: 64px;
-  padding: 8px 24px 0;
 }
 
 .mat-form-field {

@@ -13,10 +13,6 @@ export class EventsContainerComponent implements OnInit {
   ngOnInit() {
   }
 
-  goToEventList() {
-    this.router.navigate(['/events']);
-  }
-
   goToEventNew() {
     this.router.navigate(['/events/new']);
   }

@@ -4,10 +4,9 @@
   </mat-card-header>
   <mat-card-content>
 
-
     <form [formGroup]="eventForm" (ngSubmit)="save()">
 
-      <div class="example-container">
+      <div class="event-container">
 
         <mat-form-field>
           <input matInput placeholder="Title" type="text" name="title" [formControl]="eventModelControl.title">
@@ -30,6 +29,9 @@
           <mat-datepicker #pickerEnd></mat-datepicker>
         </mat-form-field>
 
+        <mat-form-field>
+          <input matInput placeholder="Location" type="text" name="location" [formControl]="eventModelControl.location">
+        </mat-form-field>
 
         <div>
           <button mat-button type="submit" [disabled]="!eventForm.valid" color="primary">
@@ -47,18 +49,13 @@
 
     <div>
       <div [hidden]="eventModelControl.title.valid || eventModelControl.title.untouched">
-        <div>
-          The following problems have been found with the username:
-        </div>
-
         <div [hidden]="!eventModelControl.title.hasError('minlength')">
-          Username can not be shorter than 5 characters.
+          Title can not be shorter than 5 characters.
         </div>
         <div [hidden]="!eventModelControl.title.hasError('required')">
-          Username is required.
+          Title is required.
         </div>
       </div>
-
     </div>
 
 
