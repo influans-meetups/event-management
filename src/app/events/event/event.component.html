@@ -1,0 +1,67 @@
+<mat-card class="app-card">
+  <mat-card-header>
+    <mat-card-title>Event</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+
+    <form [formGroup]="eventForm" (ngSubmit)="save()">
+
+      <div class="example-container">
+
+        <mat-form-field>
+          <input matInput placeholder="Title" type="text" name="title" [formControl]="eventModelControl.title">
+        </mat-form-field>
+
+        <mat-form-field>
+          <textarea matInput placeholder="Description" name="description" [formControl]="eventModelControl.description"></textarea>
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="pickerStart" placeholder="Start  date" name="start_date" [formControl]="eventModelControl.start_date">
+          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStart></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="pickerEnd" placeholder="End  date" name="end_date" [formControl]="eventModelControl.end_date">
+          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+        </mat-form-field>
+
+
+        <div>
+          <button mat-button type="submit" [disabled]="!eventForm.valid" color="primary">
+            <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon> Save
+          </button>
+
+          <button mat-button type="reset" color="accent">
+            <mat-icon aria-label="Example icon-button with a heart icon">refresh</mat-icon> Reset
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+    <div>
+      <div [hidden]="eventModelControl.title.valid || eventModelControl.title.untouched">
+        <div>
+          The following problems have been found with the username:
+        </div>
+
+        <div [hidden]="!eventModelControl.title.hasError('minlength')">
+          Username can not be shorter than 5 characters.
+        </div>
+        <div [hidden]="!eventModelControl.title.hasError('required')">
+          Username is required.
+        </div>
+      </div>
+
+    </div>
+
+
+  </mat-card-content>
+</mat-card>
+

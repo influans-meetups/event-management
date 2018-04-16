@@ -1,0 +1,8 @@
+{
+  "title": "Event Management",
+  "links": [
+    { "path": "/", "name": "Home", "icon": "home" },
+    { "path": "/about", "name": "About", "icon": "info" },
+    { "path": "/events", "name": "Events", "icon": "info" }
+  ]
+}
